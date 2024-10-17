@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 import { BlogPreview } from "@/components/Blog";
 import { ICONS } from "@/utils/icons";
+import Repository from "@/components/Repository";
 
 export default async function Home() {
 
@@ -17,7 +18,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="w-full h-screen flex flex-col lg:flex-row gap-8 items-center justify-center lg:justify-between lg:shadow-2xl lg:h-screen  lg:shadow-slate-500 overflow-y-scroll scroll-smooth">
+    <div className="w-full h-screen flex flex-col lg:flex-row gap-8 items-center justify-center lg:justify-between lg:shadow-2xl lg:h-screen  lg:shadow-slate-500 overflow-y-scroll scroll-smooth py-8">
       <div className="flex flex-col items-center justify-center gap-8 mx-auto w-full lg:border-r h-screen min-w-80">
         <div className="flex flex-col lg:flex-row gap-1 items-center h-screen justify-center">
         </div>
@@ -31,11 +32,16 @@ export default async function Home() {
         <div className="w-full border-b flex items-center justify-center pb-10 drop-shadow-md">
           {
             !user ? (
-              <button className="bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-lg font-semibold">
-                <Link href="/sign-in">
-                  Sign In
-                </Link>
-              </button>
+              <div className="flex flex-col items-center gap-3 justify-center">
+                <p className="text-sm text-gray-700 font-semibold">
+                  Sign in to create a post
+                </p>
+                <button className="bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-lg font-semibold">
+                  <Link href="/sign-in">
+                    Sign In
+                  </Link>
+                </button>
+              </div>
             ) : (
               <button className="bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-lg font-semibold">
                 <Link href="/blog/new">
@@ -45,7 +51,10 @@ export default async function Home() {
             )
           }
         </div>
-        <div className="hidden lg:block w-full">
+        <div className="hidden lg:flex w-full flex-col gap-5 items-center justify-center">
+          <div className="w-full flex items-center justify-center">
+            <Repository />
+          </div>
           <div className="w-full flex items-center justify-center gap-5">
             <div className="w-3/4 flex flex-col items-center justify-center mx-auto gap-3 border px-7 py-6 relative rounded-md shadow-md hover:shadow-2xl transition-all duration-200 ease-linear cursor-pointer">
               <h1 className="text-center w-full">
@@ -58,22 +67,22 @@ export default async function Home() {
                   </Link> — authentication & middleware
                 </li>
                 <li>
-                <Link href={"/"} className="link">
+                  <Link href={"/"} className="link">
                     <ICONS.prisma /> Prisma
                   </Link> — database
                 </li>
                 <li>
-                <Link href={"/"} className="link">
+                  <Link href={"/"} className="link">
                     <ICONS.nextjs /> Next.js
                   </Link> — frontend framework
                 </li>
                 <li>
-                <Link href={"/"} className="link">
+                  <Link href={"/"} className="link">
                     <ICONS.tailwindcss /> Tailwind CSS
                   </Link> — styling
                 </li>
                 <li>
-                <Link href={"/"} className="link">
+                  <Link href={"/"} className="link">
                     <ICONS.markdown /> React MDE
                   </Link> — markdown editor
                 </li>

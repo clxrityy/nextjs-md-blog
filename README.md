@@ -1,7 +1,5 @@
 # Next.js Markdown Blog Template <img src="/logo.png" alt="logo" width="28px" />
 
-
-
 ## Features
 
 - Clerk authentication
