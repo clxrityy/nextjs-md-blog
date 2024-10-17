@@ -3,25 +3,63 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #f5f5f5;
   --foreground: #171717;
+  --font-mono: var(--font-geist-mono)
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
+html, body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  
+  @apply w-screen h-screen;
+}
+
+mono {
+  font-family: var(--font-geist-mono), monospace;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+hr {
+  @apply m-4 w-full;
+}
+
+.link {
+  @apply text-blue-600 hover:underline transition duration-100 ease-out font-semibold flex flex-row gap-1 items-center;
 }

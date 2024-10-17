@@ -1,101 +1,98 @@
+import logo from "@/logo.png";
 import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
+import { db } from "@/lib/db";
+import Link from "next/link";
+import { BlogPreview } from "@/components/Blog";
+import { ICONS } from "@/utils/icons";
 
-export default function Home() {
+export default async function Home() {
+
+  const user = await currentUser();
+
+  const blogs = await db.blog.findMany({
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="w-full h-screen flex flex-col lg:flex-row gap-8 items-center justify-center lg:justify-between lg:shadow-2xl lg:h-screen  lg:shadow-slate-500 overflow-y-scroll scroll-smooth">
+      <div className="flex flex-col items-center justify-center gap-8 mx-auto w-full lg:border-r h-screen min-w-80">
+        <div className="flex flex-col lg:flex-row gap-1 items-center h-screen justify-center">
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <Image src={logo} alt="logo" width={100} height={100} className="drop-shadow-md" />
+        <h1>
+          Next.js Markdown Blog
+        </h1>
+        <p>
+          A simple markdown blog built with Next.js
+        </p>
+        <div className="w-full border-b flex items-center justify-center pb-10 drop-shadow-md">
+          {
+            !user ? (
+              <button className="bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-lg font-semibold">
+                <Link href="/sign-in">
+                  Sign In
+                </Link>
+              </button>
+            ) : (
+              <button className="bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-lg font-semibold">
+                <Link href="/blog/new">
+                  Create Post
+                </Link>
+              </button>
+            )
+          }
+        </div>
+        <div className="hidden lg:block w-full">
+          <div className="w-full flex items-center justify-center gap-5">
+            <div className="w-3/4 flex flex-col items-center justify-center mx-auto gap-3 border px-7 py-6 relative rounded-md shadow-md hover:shadow-2xl transition-all duration-200 ease-linear cursor-pointer">
+              <h1 className="text-center w-full">
+                Tech Stack
+              </h1>
+              <ul className="w-full grid gap-2 list-disc *:flex *:flex-row *:gap-1">
+                <li>
+                  <Link href={"/"} className="link">
+                    <ICONS.clerk /> Clerk
+                  </Link> — authentication & middleware
+                </li>
+                <li>
+                <Link href={"/"} className="link">
+                    <ICONS.prisma /> Prisma
+                  </Link> — database
+                </li>
+                <li>
+                <Link href={"/"} className="link">
+                    <ICONS.nextjs /> Next.js
+                  </Link> — frontend framework
+                </li>
+                <li>
+                <Link href={"/"} className="link">
+                    <ICONS.tailwindcss /> Tailwind CSS
+                  </Link> — styling
+                </li>
+                <li>
+                <Link href={"/"} className="link">
+                    <ICONS.markdown /> React MDE
+                  </Link> — markdown editor
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-full flex-col flex items-center justify-center lg:h-screen my-10">
+        <div className="w-full flex items-stretch justify-center h-fit flex-col mx-10 gap-5">
+          {
+            blogs.map((blog) => (
+              <div key={blog.id} className="w-1/2 flex flex-col items-center justify-center mx-auto gap-3 border px-7 py-6 relative rounded-md shadow-md hover:shadow-2xl transition-all duration-200 ease-linear cursor-pointer">
+                <BlogPreview blog={blog} />
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,19 @@
+input {
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+
+    @apply focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-blue-200;
+}
+
+textarea {
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+
+    @apply focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-blue-200;
+}

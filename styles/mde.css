@@ -1,0 +1,9 @@
+.react-mde {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
